@@ -16,7 +16,7 @@ class MCPanelAPIHelper {
     fun sendCommand(apiURL: String, apiKey: String, cmd: String): Boolean {
         Main.logger.debug("向面板发送命令: $cmd")
         val json: MediaType = "application/json; charset=utf-8".toMediaType()
-        val requestBody="{ \"command:\": \"$cmd\"}".toRequestBody(json)
+        val requestBody="{ \"command\": \"$cmd\"}".toRequestBody(json)
         val request= Request.Builder().url(apiURL)
             .addHeader("charset", "utf-8")
             .addHeader("Accept", "application/json")

@@ -28,7 +28,7 @@ class MySQLHelper {
         val result = sql.executeQuery()
         ds.close()
         while (result.next()) {
-            return try { result.getString(0) } catch (e: Exception) { "" }
+            return try { result.getString(1) } catch (e: Exception) { "" }
         }
         return ""
     }
