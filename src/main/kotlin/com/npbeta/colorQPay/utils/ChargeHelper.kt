@@ -15,10 +15,13 @@ class ChargeHelper(
     override fun run() {
         Main.logger.info("正在调起支付")
         val payTask = AliPayCall(price, group, user, AliPayCallBack)
+        Thread(payTask).start()
         payTask.sendQRCode {
             Main.logger.info("正在发送二维码")
             val imagePath = "${Main.RunDir}temp/${payTask.orderId}.png"
-            ImageIO.write(payTask.qrCodeImage, "png", File(imagePath))
+            val imageFile = File(imagePath)
+            File(imagePath).createNewFile()
+            ImageIO.write(payTask.qrCodeImage, "png", imageFile)
             Main.sendGroupPrivateImage(group, user, imagePath)
             Main.sendGroupPrivateMessage(group, user, "请在 5 分钟内扫码并支付")
         }
