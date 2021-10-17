@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
     kotlin("jvm") version "1.5.31"
+    java
 }
 
 group = "com.npbeta"
@@ -19,6 +19,8 @@ dependencies {
     implementation("com.alibaba:fastjson:1.2.78")
     implementation("org.apache.logging.log4j:log4j-api:2.14.1")
     implementation("org.apache.logging.log4j:log4j-core:2.14.1")
+    implementation("com.zaxxer:HikariCP:5.0.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.2")
 }
 
 tasks.test {
@@ -26,5 +28,27 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
+}
+
+tasks.withType<JavaCompile>() {
+    options.encoding = "UTF-8"
+}
+
+tasks.register<Jar>("uberJar") {
+    archiveClassifier.set("uber")
+
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+
+    manifest {
+        attributes["Main-Class"] = "com.npbeta.colorQPay.Main"
+    }
+
 }
