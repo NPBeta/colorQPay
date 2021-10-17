@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.npbeta"
-version = "1.0-SNAPSHOT"
+version = "1.5-SNAPSHOT"
 
 repositories {
     mavenCentral()
