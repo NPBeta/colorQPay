@@ -41,7 +41,11 @@ object PayAPI {
         val request = OrderQueryRequest()
         request.platformEnum = BestPayPlatformEnum.ALIPAY
         request.orderId = orderId
-        val response = PayConfig.bestPayService.query(request) ?: return false
-        return response.orderStatusEnum == OrderStatusEnum.SUCCESS
+        return try {
+            val response = PayConfig.bestPayService.query(request)
+            response.orderStatusEnum == OrderStatusEnum.SUCCESS
+        } catch (e: RuntimeException) {
+            false
+        }
     }
 }
