@@ -1,7 +1,8 @@
-package com.npbeta.colorQPay
+package com.npbeta.colorQPay.payments
 
 import com.lly835.bestpay.config.AliPayConfig
 import com.lly835.bestpay.service.impl.BestPayServiceImpl
+import com.npbeta.colorQPay.Main
 
 object PayConfig {
 

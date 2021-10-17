@@ -1,12 +1,12 @@
-package com.npbeta.colorQPay
+package com.npbeta.colorQPay.payments
 
-import java.util.Calendar.*
 import com.lly835.bestpay.enums.BestPayPlatformEnum
 import com.lly835.bestpay.enums.BestPayTypeEnum
 import com.lly835.bestpay.enums.OrderStatusEnum
 import com.lly835.bestpay.model.OrderQueryRequest
 import com.lly835.bestpay.model.PayRequest
 import com.lly835.bestpay.model.PayResponse
+import java.util.Calendar.*
 
 object PayAPI {
 

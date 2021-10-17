@@ -1,7 +1,8 @@
-package com.npbeta.colorQPay
+package com.npbeta.colorQPay.utils
 
-import com.npbeta.colorQPay.payments.AliPayCall
-import com.npbeta.colorQPay.payments.AliPayCallBack
+import com.npbeta.colorQPay.Main
+import com.npbeta.colorQPay.payments.alipay.AliPayCall
+import com.npbeta.colorQPay.payments.alipay.AliPayCallBack
 import java.io.File
 import javax.imageio.ImageIO
 
@@ -9,7 +10,6 @@ class ChargeHelper(
     private val price: Double,
     private val group: Long,
     private val user: Long,
-
     ): Runnable {
 
     override fun run() {

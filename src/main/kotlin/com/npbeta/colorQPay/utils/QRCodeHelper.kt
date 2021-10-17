@@ -1,10 +1,9 @@
-package com.npbeta.colorQPay
+package com.npbeta.colorQPay.utils
 
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import java.awt.image.BufferedImage
-import java.io.File
 
 class QRCodeHelper(url: String) {
     val image: BufferedImage = toBufferedImage(
