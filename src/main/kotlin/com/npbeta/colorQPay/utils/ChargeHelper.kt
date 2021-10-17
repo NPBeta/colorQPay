@@ -18,6 +18,10 @@ class ChargeHelper(
         Thread(payTask).start()
         payTask.sendQRCode {
             Main.logger.info("正在发送二维码")
+            val tempPath = File("${Main.RunDir}temp/")
+            if (!tempPath.exists()) {
+                tempPath.mkdir()
+            }
             val imagePath = "${Main.RunDir}temp/${payTask.orderId}.png"
             val imageFile = File(imagePath)
             File(imagePath).createNewFile()
