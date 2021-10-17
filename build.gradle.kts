@@ -20,7 +20,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-api:2.14.1")
     implementation("org.apache.logging.log4j:log4j-core:2.14.1")
     implementation("com.zaxxer:HikariCP:5.0.0")
-    implementation("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation("com.squareup.okhttp3:okhttp:4.0.1")
 }
 
 tasks.test {
