@@ -26,6 +26,7 @@ class MySQLHelper {
         val sql = connection.prepareStatement("SELECT `name` FROM `minecraft_qq_player` WHERE `QQ`=?")
         sql.setString(1, qq)
         val result = sql.executeQuery()
+        ds.close()
         while (result.next()) {
             return try { result.getString(0) } catch (e: Exception) { "" }
         }
