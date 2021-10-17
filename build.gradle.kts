@@ -21,6 +21,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core:2.14.1")
     implementation("com.zaxxer:HikariCP:5.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.0.1")
+    implementation("mysql:mysql-connector-java:8.0.25")
 }
 
 tasks.test {
