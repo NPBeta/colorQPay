@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage
 
 class QRCodeHelper(url: String) {
     val image: BufferedImage = toBufferedImage(
-        QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, 128, 128))
+        QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, 512, 512))
 
     private fun toBufferedImage(bitMatrix: BitMatrix): BufferedImage {
         val width = bitMatrix.width

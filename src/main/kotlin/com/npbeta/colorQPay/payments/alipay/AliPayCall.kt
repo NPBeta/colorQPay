@@ -39,6 +39,7 @@ class AliPayCall(
             override fun run() {
                 if (timer++ > maxTime) {
                     callback.addLogs(user.toString(), price, "支付超时", this@AliPayCall)
+                    Main.sendGroupPrivateMessage(group, user, "支付超时，请重新提交")
                     cancel()
                 }
                 if (PayAPI.query(orderId) && !paySuccess) {
