@@ -8,8 +8,9 @@ import com.npbeta.colorQPay.utils.MySQLHelper
 object AliPayCallBack {
 
     fun charge(price: Double, user: Long, payment: AliPayCall): Boolean {
-        addLogs(user.toString(), price, "支付完成", payment)
-        val cmd = "${Main.Config.chargeCommand} ${getRoleName(user.toString())} ${price * Main.Config.chargeMultiplier}"
+        val player = user.toString()
+        addLogs(player, price, "支付完成", payment)
+        val cmd = "${Main.Config.chargeCommand} ${getRoleName(player)} ${price * Main.Config.chargeMultiplier}"
         return MCPanelAPIHelper().sendCommand(Main.Config.mcPanelAPIURL, Main.Config.mcPanelAPIKey, cmd)
     }
 
