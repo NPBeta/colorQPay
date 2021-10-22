@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON
 import com.npbeta.colorQPay.config.ConfigObj
 import com.npbeta.colorQPay.config.ConfigUtils
 import com.npbeta.colorQPay.utils.ChargeHelper
+import com.npbeta.colorQPay.utils.MySQLHelper
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import kotlin.system.exitProcess
@@ -57,12 +58,12 @@ object Main {
                                 logger.debug(item)
                             }
                             if (message.size == 2) {
-                                logger.info("收到充值请求，准备发送私聊消息")
-                                sendGroupMessage(gPack.id, gPack.fid, "已收到充值请求，请查看私聊消息")
-                                Thread(ChargeHelper(message[1].toDouble(), gPack.id, gPack.fid)).start()
+                                if (checkInput(gPack, message[1])) {
+                                    Thread(ChargeHelper(arg[1].toDouble(), gPack.id, gPack.fid)).start()
+                                }
                             } else {
-                                logger.info("收到非法指令")
-                                sendGroupMessage(gPack.id, gPack.fid, "格式: ${Config.prefix} 整数金额")
+                                logger.warn("收到非法指令")
+                                sendGroupMessage(gPack.id, gPack.fid, "命令格式: ${Config.prefix} 整数金额")
                             }
                         }
                     }
@@ -87,6 +88,29 @@ object Main {
                 return
             }
         }
+    }
+
+    fun checkInput(pack: GroupMessageEventPack, arg: String): Boolean {
+        if (MySQLHelper().query(pack.fid.toString()) == "") {
+            logger.warn("QQ 用户未绑定角色名")
+            sendGroupMessage(pack.id, pack.fid, "请先绑定角色名到 QQ")
+        } else {
+            try {
+                val price = arg.toInt()
+                if (price in 1..2000) {
+                    logger.info("收到充值请求，准备发送私聊消息")
+                    sendGroupMessage(pack.id, pack.fid, "已收到充值请求，请查看私聊消息")
+                    return true
+                } else {
+                    logger.warn("收到错误金额")
+                    sendGroupMessage(pack.id, pack.fid, "请输入小于等于 2000 的正整数")
+                }
+            } catch (e: NumberFormatException) {
+                logger.warn("收到非法参数")
+                sendGroupMessage(pack.id, pack.fid, "请输入数字")
+            }
+        }
+        return false
     }
 
     fun sendGroupMessage(group: Long, user: Long, text: String) {
