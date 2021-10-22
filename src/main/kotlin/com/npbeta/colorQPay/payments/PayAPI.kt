@@ -3,6 +3,7 @@ package com.npbeta.colorQPay.payments
 import com.lly835.bestpay.enums.BestPayPlatformEnum
 import com.lly835.bestpay.enums.BestPayTypeEnum
 import com.lly835.bestpay.enums.OrderStatusEnum
+import com.lly835.bestpay.model.CloseRequest
 import com.lly835.bestpay.model.OrderQueryRequest
 import com.lly835.bestpay.model.PayRequest
 import com.lly835.bestpay.model.PayResponse
@@ -47,5 +48,14 @@ object PayAPI {
         } catch (e: RuntimeException) {
             false
         }
+    }
+
+    fun close(orderId: String) {
+        val request = CloseRequest()
+        request.payTypeEnum = BestPayTypeEnum.ALIPAY_QRCODE
+        request.orderId = orderId
+        try {
+            PayConfig.bestPayService.close(request)
+        } catch (e: RuntimeException) {}
     }
 }
