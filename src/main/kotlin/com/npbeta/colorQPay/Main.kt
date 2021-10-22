@@ -59,7 +59,7 @@ object Main {
                             }
                             if (message.size == 2) {
                                 if (checkInput(gPack, message[1])) {
-                                    Thread(ChargeHelper(arg[1].toDouble(), gPack.id, gPack.fid)).start()
+                                    Thread(ChargeHelper(message[1].toDouble(), gPack.id, gPack.fid)).start()
                                 }
                             } else {
                                 logger.warn("收到非法指令")
@@ -90,13 +90,13 @@ object Main {
         }
     }
 
-    fun checkInput(pack: GroupMessageEventPack, arg: String): Boolean {
+    fun checkInput(pack: GroupMessageEventPack, amount: String): Boolean {
         if (MySQLHelper().query(pack.fid.toString()) == "") {
             logger.warn("QQ 用户未绑定角色名")
             sendGroupMessage(pack.id, pack.fid, "请先绑定角色名到 QQ")
         } else {
             try {
-                val price = arg.toInt()
+                val price = amount.toInt()
                 if (price in 1..2000) {
                     logger.info("收到充值请求，准备发送私聊消息")
                     sendGroupMessage(pack.id, pack.fid, "已收到充值请求，请查看私聊消息")
